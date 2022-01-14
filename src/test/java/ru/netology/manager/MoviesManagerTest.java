@@ -83,4 +83,23 @@ class MoviesManagerTest {
 
         assertArrayEquals(expected, actual);
     }
+
+    @Test
+    void getAfficheWithDefaultSettingBoundaryValues() {
+        manager.add(one);
+        manager.add(two);
+        manager.add(three);
+        manager.add(four);
+        manager.add(five);
+        manager.add(six);
+        manager.add(seven);
+        manager.add(eight);
+        manager.add(nine);
+        manager.add(ten);
+
+        Movie[] actual = manager.getAll();
+        Movie[] expected = new Movie[]{ten, nine, eight, seven, six, five, four, three, two, one};
+
+        assertArrayEquals(expected, actual);
+    }
 }
