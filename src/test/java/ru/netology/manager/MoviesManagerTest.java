@@ -22,27 +22,32 @@ class MoviesManagerTest {
     Movie twelve = new Movie("astral", "Астрал", "scary", "none", false);
 
     @Test
-    void add() {
+    void shouldAddMovie() {
         manager.add(nine);
 
         Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{nine};
+        Movie[] expected = {nine};
 
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    void getAfficheWithManualSetting() {
-        MoviesManager manager = new MoviesManager(3);
+    void getAfficheWithManualSettingLessThanValuesOfArray() {
+        MoviesManager manager = new MoviesManager(8);
 
-        manager.add(one);
-        manager.add(two);
         manager.add(three);
         manager.add(four);
         manager.add(five);
+        manager.add(six);
+        manager.add(seven);
+        manager.add(eight);
+        manager.add(nine);
+        manager.add(ten);
+        manager.add(eleven);
+        manager.add(twelve);
 
         Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{five, four, three};
+        Movie[] expected = {twelve, eleven, ten, nine, eight, seven, six, five};
 
         assertArrayEquals(expected, actual);
     }
@@ -58,7 +63,7 @@ class MoviesManagerTest {
         manager.add(twelve);
 
         Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{twelve, eleven, ten, nine, eight};
+        Movie[] expected = {twelve, eleven, ten, nine, eight};
 
         assertArrayEquals(expected, actual);
     }
@@ -79,7 +84,7 @@ class MoviesManagerTest {
         manager.add(twelve);
 
         Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{twelve, eleven, ten, nine, eight, seven, six, five, four, three};
+        Movie[] expected = {twelve, eleven, ten, nine, eight, seven, six, five, four, three};
 
         assertArrayEquals(expected, actual);
     }
@@ -98,7 +103,7 @@ class MoviesManagerTest {
         manager.add(ten);
 
         Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{ten, nine, eight, seven, six, five, four, three, two, one};
+        Movie[] expected = {ten, nine, eight, seven, six, five, four, three, two, one};
 
         assertArrayEquals(expected, actual);
     }
