@@ -10,8 +10,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
 class AfishaManagerTest {
-
-    private AfishaRepository repository = new AfishaRepository();
+    private AfishaRepository repository = Mockito.mock(AfishaRepository.class);
     private AfishaManager manager = new AfishaManager(repository);
 
     Movie one = new Movie("matrix1", "Матрица 1", "fantastic", "none", false);
@@ -28,11 +27,7 @@ class AfishaManagerTest {
     Movie twelve = new Movie("astral", "Астрал", "scary", "none", false);
 
     @Test
-    void getAll() {
-        //@Mock, для тестирования логики менеджера
-        AfishaRepository repository = Mockito.mock(AfishaRepository.class);
-        AfishaManager manager = new AfishaManager(repository);
-
+    void shouldGetAll() {
         manager.add(one);
         manager.add(two);
         manager.add(three);
@@ -43,7 +38,7 @@ class AfishaManagerTest {
         doReturn(returned).when(repository).findAll();
 
         Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{five, four, three, two, one};
+        Movie[] expected = {five, four, three, two, one};
 
         assertArrayEquals(expected, actual);
 
@@ -52,43 +47,14 @@ class AfishaManagerTest {
     }
 
     @Test
-    void deleteById() {
-        //@Mock, для тестирования логики менеджера
-        AfishaRepository repository = Mockito.mock(AfishaRepository.class);
-        AfishaManager manager = new AfishaManager(repository);
-
-        manager.add(one);
-        manager.add(two);
-        manager.add(three);
-        manager.add(four);
-        manager.add(five);
-        repository.removeById("matrix4");
-
-        Movie[] returned = {one, two, three, five};
-        doReturn(returned).when(repository).findAll();
-
-        Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{five, three, two, one};
-
-        assertArrayEquals(expected, actual);
-
-        //Проверка вызова заглушки
-        verify(repository).findAll();
-    }
-
-    @Test
-    void add() {
-        //@Mock, для тестирования логики менеджера
-        AfishaRepository repository = Mockito.mock(AfishaRepository.class);
-        AfishaManager manager = new AfishaManager(repository);
-
+    void shouldAddMovie() {
         manager.add(nine);
 
         Movie[] returned = {nine};
         doReturn(returned).when(repository).findAll();
 
         Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{nine};
+        Movie[] expected = {nine};
 
         assertArrayEquals(expected, actual);
 
@@ -97,79 +63,7 @@ class AfishaManagerTest {
     }
 
     @Test
-    void finById() {
-        manager.add(one);
-        manager.add(two);
-        manager.add(three);
-        manager.add(four);
-        manager.add(five);
-
-        Movie[] actual = repository.findById("matrix3");
-        Movie[] expected = new Movie[]{three};
-
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    void finByIdNotExist() {
-        manager.add(one);
-        manager.add(two);
-        manager.add(three);
-        manager.add(four);
-        manager.add(five);
-
-        Movie[] actual = repository.findById("astral");
-        Movie[] expected = new Movie[]{null};
-
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    void removeAll() {
-        //@Mock, для тестирования логики менеджера
-        AfishaRepository repository = Mockito.mock(AfishaRepository.class);
-        AfishaManager manager = new AfishaManager(repository);
-
-        manager.add(one);
-        manager.add(two);
-        manager.add(three);
-        manager.add(four);
-        manager.add(five);
-        repository.removeAll();
-
-        Movie[] returned = {};
-        doReturn(returned).when(repository).findAll();
-
-        Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{};
-
-        assertArrayEquals(expected, actual);
-
-        //Проверка вызова заглушки
-        verify(repository).findAll();
-    }
-
-
-    @Test
-    void deleteByIdNotExist() {
-        manager.add(one);
-        manager.add(two);
-        manager.add(three);
-        manager.add(four);
-        manager.add(five);
-        repository.removeById("astral");
-
-        Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{five, four, three, two, one};
-
-        assertArrayEquals(expected, actual);
-    }
-
-
-    @Test
-    void getAfficheWithManualSetting() {
-        //@Mock, для тестирования логики менеджера
-        AfishaRepository repository = Mockito.mock(AfishaRepository.class);
+    void getAfficheWithManualSettingLessThanValuesOfArray() {
         AfishaManager manager = new AfishaManager(3, repository);
 
         manager.add(one);
@@ -182,7 +76,7 @@ class AfishaManagerTest {
         doReturn(returned).when(repository).findAll();
 
         Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{five, four, three};
+        Movie[] expected = {five, four, three};
 
         assertArrayEquals(expected, actual);
 
@@ -192,8 +86,6 @@ class AfishaManagerTest {
 
     @Test
     void getAfficheWithManualSettingMoreThanValuesOfArray() {
-        //@Mock, для тестирования логики менеджера
-        AfishaRepository repository = Mockito.mock(AfishaRepository.class);
         AfishaManager manager = new AfishaManager(8, repository);
 
         manager.add(eight);
@@ -206,7 +98,7 @@ class AfishaManagerTest {
         doReturn(returned).when(repository).findAll();
 
         Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{twelve, eleven, ten, nine, eight};
+        Movie[] expected = {twelve, eleven, ten, nine, eight};
 
         assertArrayEquals(expected, actual);
 
@@ -216,10 +108,6 @@ class AfishaManagerTest {
 
     @Test
     void getAfficheWithDefaultSetting() {
-        //@Mock, для тестирования логики менеджера
-        AfishaRepository repository = Mockito.mock(AfishaRepository.class);
-        AfishaManager manager = new AfishaManager(repository);
-
         manager.add(one);
         manager.add(two);
         manager.add(three);
@@ -237,7 +125,7 @@ class AfishaManagerTest {
         doReturn(returned).when(repository).findAll();
 
         Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{twelve, eleven, ten, nine, eight, seven, six, five, four, three};
+        Movie[] expected = {twelve, eleven, ten, nine, eight, seven, six, five, four, three};
 
         assertArrayEquals(expected, actual);
 
@@ -247,10 +135,6 @@ class AfishaManagerTest {
 
     @Test
     void getAfficheWithDefaultSettingBoundaryValues() {
-        //@Mock, для тестирования логики менеджера
-        AfishaRepository repository = Mockito.mock(AfishaRepository.class);
-        AfishaManager manager = new AfishaManager(repository);
-
         manager.add(one);
         manager.add(two);
         manager.add(three);
@@ -266,7 +150,7 @@ class AfishaManagerTest {
         doReturn(returned).when(repository).findAll();
 
         Movie[] actual = manager.getAll();
-        Movie[] expected = new Movie[]{ten, nine, eight, seven, six, five, four, three, two, one};
+        Movie[] expected = {ten, nine, eight, seven, six, five, four, three, two, one};
 
         assertArrayEquals(expected, actual);
 
