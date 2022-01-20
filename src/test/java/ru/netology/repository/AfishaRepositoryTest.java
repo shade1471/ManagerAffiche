@@ -54,7 +54,7 @@ class AfishaRepositoryTest {
         repository.save(five);
 
         Movie[] actual = repository.findById("astral");
-        Movie[] expected = {null};
+        Movie[] expected = null;
 
         assertArrayEquals(expected, actual);
     }

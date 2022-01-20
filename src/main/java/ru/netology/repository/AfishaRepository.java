@@ -21,13 +21,13 @@ public class AfishaRepository {
 
     public Movie[] findById(String id) {
         Movie[] tmp = new Movie[1];
-        int index = 0;
         for (Movie film : movies) {
             if (film.getId().equals(id)) {
-                tmp[index] = film;
+                tmp[0] = film;
+                return tmp;
             }
         }
-        return tmp;
+        return null;
     }
 
     public void removeById(String id) {
